@@ -10,8 +10,8 @@
 
 using namespace std;
 
-constexpr int MAX_VECTOR_SIZE = 100000000;
-constexpr int MAX_MATRIX_SIZE = 10000;
+const int MAX_VECTOR_SIZE = 100000000;
+const int MAX_MATRIX_SIZE = 10000;
 
 // Динамический вектор - 
 // шаблонный вектор на динамической памяти
