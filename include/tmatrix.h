@@ -173,7 +173,7 @@ public:
         }
         TDynamicVector<T> res(sz);
         for (size_t i = 0; i < sz; i++) {
-            res.pMem[i] = pMem[i] - v.pMem[i];
+            res.pMem[i] = pMem[i] - v[i];
         }
         return res;
     }
@@ -184,7 +184,7 @@ public:
         }
         T res = static_cast<T>(0);
         for (size_t i = 0; i < sz; i++) {
-            res += pMem[i] * v.pMem[i];
+            res += pMem[i] * v[i];
         }
         return res;
     }
@@ -293,10 +293,10 @@ public:
             throw length_error("different matrix sizes");
         }
         TDynamicMatrix<T> res(sz);
-        for (size_t i = 0; i < sz; i++) {
-            for (size_t j = 0; j < sz; j++) {
-                for (size_t k = 0; k < sz; k++) {
-                    res[i][j] += pMem[i][k] * m.pMem[k][j];
+        for (int i = 0; i < sz; i++) {
+            for (int j = 0; j < sz; j++) {
+                for (int k = 0; k < sz; k++) {
+                    res[i][j] += pMem[i][k] * m[k][j];
                 }
             }
         }
