@@ -36,7 +36,7 @@ TEST(TDynamicVector, copied_vector_has_its_own_memory)
 	}
 	TDynamicVector<int> v2 = v1;
 	for (auto i = 0; i < 10; i++) {
-		v2[i] = i+1;
+		v2[i] = i + 1;
 	}
 	EXPECT_NE(v2, v1);
 }
@@ -263,9 +263,23 @@ TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
 {
 	TDynamicVector<int> v(100), v1(101);
 	for (int i = 0; i < 100; i++)
-	{ 
-		v[i] = i; 
-		v1[i] = i; 
+	{
+		v[i] = i;
+		v1[i] = i;
 	}
 	ASSERT_ANY_THROW(v1 * v);
+}
+
+TEST(TDynamicVector, initialization_constructor_overload)
+{
+	int n = 100;
+	int* mas = new int[n];
+	for (int i = 0; i < n; i++)
+		mas[i] = i;
+	TDynamicVector<int> v(mas, n);
+	bool check = 1;
+	for (int i = 0; i < n; i++)
+		if (mas[i] != v[i])
+			check = 0;
+	EXPECT_EQ(1, check);
 }
