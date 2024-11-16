@@ -23,10 +23,10 @@ TEST(TDynamicMatrix, can_create_copied_matrix)
 TEST(TDynamicMatrix, copied_matrix_is_equal_to_source_one)
 {
 	TDynamicMatrix<int> A(10);
-	for (int i = 0; i < 10; i++) 
+	for (int i = 0; i < 10; i++)
 		for (auto j = 0; j < 10; j++) {
 			A[i][j] = rand();
-	}
+		}
 	TDynamicMatrix<int> copy = A;
 	EXPECT_EQ(A, copy);
 }
@@ -35,8 +35,8 @@ TEST(TDynamicMatrix, copied_matrix_has_its_own_memory)
 {
 	int n = 10;
 	TDynamicMatrix<int> A(n);
-	for (int i = 0; i < n; ++i)
-		for (int j = 0; j < n; ++j)
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
 			A[i][j] = i * n + j;
 	TDynamicMatrix<int> copy = A;
 	copy[0][0] += 1;
@@ -54,13 +54,11 @@ TEST(TDynamicMatrix, can_get_size)
 TEST(TDynamicMatrix, can_set_and_get_element)
 {
 	TDynamicMatrix<int> m(1000);
-	srand(time(0));
-	int i = rand() % 1000, j = rand() % 1000, el = rand() % 2989231;
-	m[i][j] = el;
-	EXPECT_EQ(el, m[i][j]);
+	int i = rand() % 1000, j = rand() % 1000;
+	m[i][j] = 5;
+	EXPECT_EQ(5, m[i][j]);
 }
 
-//<set negative index>------------------------>
 TEST(TDynamicMatrix, throws_when_set_element_with_negative_index_out)
 {
 	TDynamicMatrix<int> m(1000);
@@ -71,14 +69,12 @@ TEST(TDynamicMatrix, throws_when_set_element_with_negative_index_in)
 	TDynamicMatrix<int> m(1000);
 	ASSERT_ANY_THROW(m.at(2).at(-4));
 }
-//end----------------------------------------->
 
-//set large index----------------------------->
 TEST(TDynamicMatrix, throws_when_set_element_with_too_large_index_out_eq_sz)
 {
 	int n = 10;
 	TDynamicMatrix<int> m(n);
-	ASSERT_ANY_THROW(m.at(n).at(n-1));
+	ASSERT_ANY_THROW(m.at(n).at(n - 1));
 }
 TEST(TDynamicMatrix, throws_when_set_element_with_too_large_index_in_eq_sz)
 {
@@ -98,15 +94,14 @@ TEST(TDynamicMatrix, throws_when_set_element_with_too_large_index_in_gr_sz)
 	TDynamicMatrix<int> m(n);
 	ASSERT_ANY_THROW(m.at(n - 1).at(n + 1));
 }
-//end---------------------------------------->
 
 TEST(TDynamicMatrix, can_assign_matrix_to_itself)
 {
 	TDynamicMatrix<int> m(10);
-	for (int i = 0; i < 10; i++) 
+	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++) {
-		m[i][j] = rand();
-	}
+			m[i][j] = rand();
+		}
 	ASSERT_NO_THROW(m = m);
 }
 
@@ -114,10 +109,10 @@ TEST(TDynamicMatrix, can_assign_matrices_of_equal_size)
 {
 	int n = 10;
 	TDynamicMatrix<int> A(n);
-	for (int i = 0; i < n; i++) 
+	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++) {
 			A[i][j] = rand();
-	}
+		}
 	TDynamicMatrix<int> copy(n);
 	ASSERT_NO_THROW(copy = A);
 	EXPECT_EQ(copy, A);
@@ -143,11 +138,11 @@ TEST(TDynamicMatrix, can_assign_matrices_of_different_size)
 	int n2 = 20;
 	TDynamicMatrix<int> a(n1);
 	TDynamicMatrix<int> b(n2);
-	for (int i = 0; i < n2; i++) 
+	for (int i = 0; i < n2; i++)
 		for (int j = 0; j < n2; j++) {
-		a[i%n1][j%n1] = i + j * n1;
-		b[i][j] = i + j * n2;
-	}
+			a[i % n1][j % n1] = i + j * n1;
+			b[i][j] = i + j * n2;
+		}
 	ASSERT_NO_THROW(a = b);
 	EXPECT_EQ(a, b);
 }
@@ -187,8 +182,8 @@ TEST(TDynamicMatrix, compare_matrix_with_itself_return_true)
 	TDynamicMatrix<int> m(10);
 	for (auto i = 0; i < 10; i++)
 		for (auto j = 0; j < 10; j++) {
-		m[i][j] = i*10 + j;
-	}
+			m[i][j] = i * 10 + j;
+		}
 
 	ASSERT_NO_THROW(m == m);
 	EXPECT_EQ(m == m, 1);
@@ -212,12 +207,12 @@ TEST(TDynamicMatrix, can_add_matrices_with_equal_size)
 	TDynamicMatrix<int> a(10);
 	TDynamicMatrix<int> b(10);
 	TDynamicMatrix<int> c(10);
-	for (auto i = 0; i < 10; i++) 
+	for (auto i = 0; i < 10; i++)
 		for (auto j = 0; j < 10; j++) {
-		a[i][j] = i + j * 10;
-		b[i][j] = i + j * 10;
-		c[i][j] = 2 * (i + j * 10);
-	}
+			a[i][j] = i + j * 10;
+			b[i][j] = i + j * 10;
+			c[i][j] = 2 * (i + j * 10);
+		}
 
 	ASSERT_NO_THROW(a + b);
 
@@ -236,12 +231,12 @@ TEST(TDynamicMatrix, can_subtract_matrices_with_equal_size)
 	TDynamicMatrix<int> a(10);
 	TDynamicMatrix<int> b(10);
 	TDynamicMatrix<int> res(10);
-	for (int i = 0; i < 10; i++) 
+	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++) {
-		a[i][j] = i + j * 10;
-		b[i][j] = i + j * 10;
-		res[i][j] = 0;
-	}
+			a[i][j] = i + j * 10;
+			b[i][j] = i + j * 10;
+			res[i][j] = 0;
+		}
 
 	ASSERT_NO_THROW(a - b);
 	EXPECT_EQ(a - b, res);
